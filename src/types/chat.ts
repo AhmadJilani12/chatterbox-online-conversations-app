@@ -4,6 +4,8 @@ export interface Message {
   content: string;
   sender: 'user' | 'other';
   timestamp: Date;
+  read?: boolean;
+  typing?: boolean;
 }
 
 export interface ChatProps {

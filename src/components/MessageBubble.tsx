@@ -1,7 +1,8 @@
 
 import { cn } from "@/lib/utils";
 import { Message } from "@/types/chat";
-import { formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
+import { Check, CheckCheck } from "lucide-react";
 
 interface MessageBubbleProps {
   message: Message;
@@ -9,7 +10,7 @@ interface MessageBubbleProps {
 
 const MessageBubble = ({ message }: MessageBubbleProps) => {
   const isUserMessage = message.sender === 'user';
-  const formattedTime = formatDistanceToNow(new Date(message.timestamp), { addSuffix: true });
+  const formattedTime = format(new Date(message.timestamp), 'h:mm a');
   
   return (
     <div 
@@ -27,12 +28,17 @@ const MessageBubble = ({ message }: MessageBubbleProps) => {
         )}
       >
         <p className="text-sm sm:text-base">{message.content}</p>
-        <p className={cn(
-          "text-xs mt-1 opacity-70",
-          isUserMessage ? "text-primary-foreground" : "text-secondary-foreground"
+        <div className={cn(
+          "flex items-center justify-end gap-1 mt-1",
+          isUserMessage ? "text-primary-foreground/70" : "text-secondary-foreground/70"
         )}>
-          {formattedTime}
-        </p>
+          <span className="text-xs">{formattedTime}</span>
+          {isUserMessage && (
+            <span className="ml-1">
+              {message.read ? <CheckCheck size={12} /> : <Check size={12} />}
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

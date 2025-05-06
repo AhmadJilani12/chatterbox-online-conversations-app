@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
+import EmojiPicker from "./EmojiPicker";
 
 interface MessageInputProps {
   onSendMessage: (message: string) => void;
@@ -20,11 +21,16 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
     }
   };
 
+  const handleEmojiSelect = (emoji: string) => {
+    setMessage((prev) => prev + emoji);
+  };
+
   return (
     <form 
       onSubmit={handleSubmit} 
       className="flex items-center gap-2 p-4 border-t bg-card"
     >
+      <EmojiPicker onEmojiSelect={handleEmojiSelect} />
       <Input
         value={message}
         onChange={(e) => setMessage(e.target.value)}
